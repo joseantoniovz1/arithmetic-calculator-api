@@ -1,10 +1,11 @@
 package com.challenge.api.entity;
 
-import com.challenge.api.enums.OperationType;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "operation")
 public class Operation {
@@ -19,7 +20,5 @@ public class Operation {
     @Column(name = "cost")
     private float cost;
 
-    @OneToOne(mappedBy = "operation", cascade = CascadeType.ALL)
-    private Record record;
 
 }

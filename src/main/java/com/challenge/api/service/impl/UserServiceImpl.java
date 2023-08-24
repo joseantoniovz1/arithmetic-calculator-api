@@ -1,5 +1,6 @@
 package com.challenge.api.service.impl;
 
+import com.challenge.api.dto.RecordReferenceDto;
 import com.challenge.api.dto.UserDto;
 import com.challenge.api.entity.User;
 import com.challenge.api.repository.UserReporsitory;
@@ -17,30 +18,37 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private UserReporsitory reporsitory;
+    private UserReporsitory repository;
 
     private ModelMapper mapper;
 
     @Override
     public List<UserDto> getUsers() {
-        List<User> users = reporsitory.findAll();
-        return users.stream().map((user) -> mapper.map(user, UserDto.class))
-                .collect(Collectors.toList());
+        List<User> users = repository.findAll();
+        return users.stream().map(user -> {
+            UserDto userDto = mapper.map(user, UserDto.class);
+            if(user.getRecords() != null) {
+                user.getRecords().stream().map((record -> mapper.map(record, RecordReferenceDto.class)))
+                        .collect(Collectors.toList());
+            }
+            return userDto;
+        }).collect(Collectors.toList());
+
     }
 
     @Override
     public UserDto getUserByEmail(String email) {
-        return mapper.map(reporsitory.findUserByEmail(email), UserDto.class);
+        return mapper.map(repository.findUserByEmail(email), UserDto.class);
     }
 
     @Override
     public UserDto updateUser(String email, UserDto userDto) {
-        User user = reporsitory.findUserByEmail(email);
+        User user = repository.findUserByEmail(email);
         if (user != null) {
             user.setEmail(userDto.getEmail());
             user.setPassword(userDto.getPassword());
             user.setStatus(userDto.getStatus());
-            return mapper.map(reporsitory.save(user), UserDto.class);
+            return mapper.map(repository.save(user), UserDto.class);
         }
         return null;
     }

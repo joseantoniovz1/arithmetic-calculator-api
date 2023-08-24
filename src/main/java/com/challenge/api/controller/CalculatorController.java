@@ -16,7 +16,7 @@ import java.util.List;
         name = "Calculator Controller",
         description = "Arithmetic Calculator REST API"
 )
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @Slf4j
 @AllArgsConstructor
 @RestController

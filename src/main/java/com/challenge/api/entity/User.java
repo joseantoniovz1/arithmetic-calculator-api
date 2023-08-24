@@ -1,16 +1,21 @@
 package com.challenge.api.entity;
 
-import com.challenge.api.enums.Status;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+import java.util.List;
+
+
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "email")
@@ -21,5 +26,9 @@ public class User {
 
     @Column(name = "status")
     private String status;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private List<Record> records;
 
 }

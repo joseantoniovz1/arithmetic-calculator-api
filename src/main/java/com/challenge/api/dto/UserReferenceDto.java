@@ -7,13 +7,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class OperationDto {
+public class UserReferenceDto {
 
     private long id;
 
-    private String type;
-
-    private float cost;
-
+    private String email;
 
 }

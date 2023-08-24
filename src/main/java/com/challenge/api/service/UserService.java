@@ -1,7 +1,6 @@
 package com.challenge.api.service;
 
 import com.challenge.api.dto.UserDto;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
